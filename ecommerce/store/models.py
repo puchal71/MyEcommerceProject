@@ -18,6 +18,14 @@ class Product(models.Model):
     stock = models.FloatField(null=True)
     image = models.ImageField(null=True, blank=True)
 
+    @property
+    def image_url(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
     # TODO Dodalem media root do settingsow, zeby sciagac zdjecia skad chce. Nie dziala.
 
     def __str__(self):
