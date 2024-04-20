@@ -18,7 +18,7 @@ class Product(models.Model):
     stock = models.FloatField(null=True)
     image = models.ImageField(null=True, blank=True)
 
-    # TODO dodaj zdjecie do produktow.
+    # TODO Dodalem media root do settingsow, zeby sciagac zdjecia skad chce. Nie dziala.
 
     def __str__(self):
         return self.name
