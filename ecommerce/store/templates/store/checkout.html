@@ -25,10 +25,10 @@
 							<input class="form-control" type="text" name="address" placeholder="Gatuaddress..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="city" placeholder="City..">
+							<input class="form-control" type="text" name="city" placeholder="Stad..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="state" placeholder="State..">
+							<input class="form-control" type="text" name="state" placeholder="Region..">
 						</div>
 						<div class="form-field">
 							<input class="form-control" type="text" name="zipcode" placeholder="Postnummer..">
@@ -37,7 +37,7 @@
 					</div>
 
 					<hr>
-					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Fortsatt">
 				</form>
 			</div>
 
@@ -50,9 +50,9 @@
 
 		<div class="col-lg-6">
 			<div class="box-element">
-				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Tillbaka till Beställning</a>
 				<hr>
-				<h3>Order Summary</h3>
+				<h3>Beställningsöversikt</h3>
 				<hr>
 				{% for item in items %}
 				<div class="cart-row">
@@ -62,8 +62,8 @@
 					<div style="flex:1"><p>{{item.quantity}} kg</p></div>
 				</div>
 				{% endfor %}
-				<h5>Items: {{order.get_cart_items}} kg</h5>
-				<h5>Total: {{order.get_cart_total|floatformat:2}} SEK</h5>
+				<h5>Total vikt av beställning: {{order.get_cart_items}} kg</h5>
+				<h5>Total at betala: {{order.get_cart_total|floatformat:2}} SEK</h5>
 			</div>
 		</div>
 	</div>
