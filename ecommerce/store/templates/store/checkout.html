@@ -67,5 +67,16 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		var shipping = '{{order.shipping}}'
+
+		var total = '{{order.get_cart_total|floatformat:2}}'
+
+		if (user != 'AnonymousUser'){
+			document.getElementById('user-info').innerHTML = ''
+		}
+
+	</script>
 {% endblock content %}
 

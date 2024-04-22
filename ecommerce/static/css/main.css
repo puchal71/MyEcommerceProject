@@ -7,6 +7,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .box-element{
+
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
 	border-radius: 4px;
@@ -14,6 +15,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .thumbnail{
+    margin-top: 40px;
 	width: 100%;
 	height: 200px;
 	-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
@@ -22,11 +24,12 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .product{
+
 	border-radius: 0 0 4px 4px;
 }
 
 .bg-dark{
-	background-color: #4f868c!important;
+	background-color: red;
 }
 
 #cart-icon{
@@ -71,7 +74,7 @@ h1,h2,h3,h4,h5,h6{
     align-items: flex-stretch;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    border-bottom: 1px solid #ececec;
+
 
 }
 

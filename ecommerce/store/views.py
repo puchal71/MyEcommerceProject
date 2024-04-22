@@ -10,20 +10,21 @@ def store(request):
 
 # Dodane zeby pokazac ilosc produktow w koszyku dla widoku. Nie bede uzywal raczej.
 
-    # if request.user.is_authenticated:
-    #     customer = request.user.customer
-    #     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    #     items = order.orderitem_set.all()
-    #     cartItems = order.get_cart_items
-    # else:
-    #     items = []
-    #
-    #     # Dodane, zeby przy niezalogowanym uzytkowniku nie wywalalo bleu tylko dawalo pusty koszyk.
-    #     order = {'get_cart_total': 0, 'get_cart_items': 0}
-    #     cartItems = order['get_cart_items']
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items_number
+    else:
+        items = []
+
+    # Dodane, zeby przy niezalogowanym uzytkowniku nie wywalalo bleu tylko dawalo pusty koszyk.
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items_number']
+
 
     products = Product.objects.all()
-    context = {'products': products}
+    context = {'products': products, 'cartItems': cartItems}
     return render(request, 'store/store.html', context)
 
 
@@ -36,6 +37,7 @@ def cart(request):
     else:
         items = []
 
+        print("Uzytkownik musi byc zalogowany, zeby zlozyc zamowienie!")
         # Dodane, zeby przy niezalogowanym uzytkowniku nie wywalalo bleu tylko dawalo pusty koszyk.
         order = {'get_cart_total':0, 'get_cart_items':0}
 
@@ -76,11 +78,10 @@ def updateItem(request):
         orderItem.quantity = (orderItem.quantity +100)
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity -100)
-
     orderItem.save()
-
-    if orderItem.quantity <= 0:
+    if orderItem.quantity <= 0 or action == 'delete':
         orderItem.delete()
+
 
     return JsonResponse('dodano obiekt', safe=False)
 
