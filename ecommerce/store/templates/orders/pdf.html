@@ -1,0 +1,59 @@
+<html>
+<body>
+
+    <h3>Säljare</h3>
+    <h1> Torkade Grönsaker </h1>
+    <p>Moj adres bla bla bla</p>
+    <p>Moj numer identyfikacyjny firmy</p>
+    <p>Moj numer konta</p>
+    <br>
+    <p>
+        Faktura nr {{order.id}}<br>
+        <span class="secondary">
+            {{order.created|date: "M d, Y"}}
+        </span>
+    </p>
+    <h3>Köpare</h3>
+    <p>
+        pobieranie danych z customer czy tam shipping
+        strona 470 ksiazki
+
+        jesl prywatna osoba:
+
+        {{ customer.firstname }} {{ customer.lastname }}<br>
+        {{ customer.address }} {{ customer.zipcode }}<br>
+        {{ customer.city }} {{ customer.personnummer }}<br>
+
+         jesli firma:
+
+        {{ customer.company_name }} {{ customer.company_idnumber }}<br>
+        {{ customer.address }} {{ customer.zipcode }}<br>
+        {{ customer.city }}
+    </p>
+    <h3>Köpt produkter:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Pris</th>
+                <th>Mängden</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+                <tr class="row{% cycle "1" "2" %}">
+                    <td>{{ item.product.name }}</td>
+                    <td class="num">{{ item.price }} SEK</td>
+                    <td class="num">{{ item.quantity }}</td>
+                    <td class="num">{{ item.get_total }} SEK</td>
+                </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="3">Total at betala:</td>
+                <td class="num">{{ order.get_cart_total|floatformat:2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
