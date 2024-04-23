@@ -55,7 +55,7 @@
 					<div style="flex:1"><p>{{item.get_total}} SEK</p></div>
                     <div class="quantity">
                         <!-- TODO dodaj CSS -->
-                        <img id="cart-delete" data-product="{{item.product.id}}" data-action="delete" class="update-cart" src="{% static 'images/delete.png' %}"></img>
+                        <img  data-product="{{item.product.id}}" data-action="delete" class="cart-delete" src="{% static 'images/delete.png' %}"></img>
                     </div>
             </div>
             {% endfor %}
