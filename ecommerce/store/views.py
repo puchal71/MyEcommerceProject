@@ -1,17 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from .forms import CreateUserForm
 from .models import *
-from .models import User
 from django.http import JsonResponse
 import json
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
 
+@login_required
 def store(request):
 
 # Dodane zeby pokazac ilosc produktow w koszyku dla widoku. Nie bede uzywal raczej.
 
+
     if request.user.is_authenticated:
-        customer = request.user.customer
+        user = request.user
+        customer, created = Customer.objects.get_or_create(
+            user=user,
+            name=user.first_name,
+            email=user.email,
+        )
+
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items_number
@@ -27,11 +37,16 @@ def store(request):
     context = {'items': items, 'order': order, 'cartItems': cartItems, 'products': products}
     return render(request, 'store/store.html', context)
 
-
+@login_required
 def cart(request):
 
     if request.user.is_authenticated:
-        customer = request.user.customer
+        user = request.user
+        customer, created = Customer.objects.get_or_create(
+            user=user,
+            name=user.first_name,
+            email=user.email,
+        )
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items_number
@@ -45,10 +60,15 @@ def cart(request):
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'store/cart.html', context)
 
-
+@login_required
 def checkout(request):
     if request.user.is_authenticated:
-        customer = request.user.customer
+        user = request.user
+        customer, created = Customer.objects.get_or_create(
+            user=user,
+            name=user.first_name,
+            email=user.email,
+        )
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items_number
@@ -71,7 +91,12 @@ def updateItem(request):
     print('Action:', action)
     print('productId:', productId)
 
-    customer = request.user.customer
+    user = request.user
+    customer, created = Customer.objects.get_or_create(
+        user=user,
+        name=user.first_name,
+        email=user.email,
+    )
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
@@ -88,4 +113,47 @@ def updateItem(request):
 
     return JsonResponse('dodano obiekt', safe=False)
 
+
+def login_page(request):
+    if request.user.is_authenticated:
+        return redirect('store')
+    else:
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('store')
+            else:
+                messages.info(request, "Felaktiga uppgifter")
+
+        context = {}
+        return render(request, 'store/login_page.html', context)
+
+
+def register_page(request):
+    if request.user.is_authenticated:
+        return redirect('store')
+    else:
+        form = CreateUserForm()
+
+        if request.method == "POST":
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, "Kontot skaffade för: " + user)
+                return redirect('login')
+            else:
+                messages.info(request, "Kunde inte skaffa konto...")
+        context = {'form': form}
+        return render(request, 'store/register.html', context)
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('store')
 
