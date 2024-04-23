@@ -62,7 +62,7 @@
 					<div style="flex:1"><p>{{item.quantity}} kg</p></div>
 				</div>
 				{% endfor %}
-				<h5>Total vikt av beställning: {{order.get_cart_items}} kg</h5>
+				<h5>Total vikt på beställning: {{order.get_cart_items}} kg</h5>
 				<h5>Total at betala: {{order.get_cart_total|floatformat:2}} SEK</h5>
 			</div>
 		</div>
