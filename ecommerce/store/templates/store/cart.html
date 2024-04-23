@@ -35,6 +35,7 @@
                 <div style="flex: 1"><strong>Pris</strong></div>
                 <div style="flex: 1"><strong>Kvantitet</strong></div>
                 <div style="flex: 1"><strong>Total</strong></div>
+<!--                <div style="flex: 1"><strong>Radera</strong></div>-->
             </div>
 
             {% for item in items %}
@@ -48,10 +49,13 @@
 							<img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
 
 							<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
-                            <button data-product="{{item.product.id}}" data-action="delete" class="update-cart">usun</button>
+
 						</div>
 					</div>
 					<div style="flex:1"><p>{{item.get_total}} SEK</p></div>
+                    <div class="quantity">
+                        <img data-product="{{item.product.id}}" data-action="delete" class="update-cart" src="{% static 'images/delete.png' %}"></img>
+                    </div>
             </div>
             {% endfor %}
         </div>
