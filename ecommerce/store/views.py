@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from .forms import CreateUserForm
 from .models import *
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+# from django.contrib.admin.views.decorators import staff_member_required
+# from django.conf import settings
+# from django.template.loader import render_to_string
+# import weasyprint
+
 
 
 @login_required
@@ -156,4 +161,14 @@ def register_page(request):
 def logout_page(request):
     logout(request)
     return redirect('store')
+
+
+# @staff_member_required
+# def admin_order_pdf(request, order_id):
+#     order = get_object_or_404(Order, id=order_id)
+#     html = render_to_string('orders/pdf.html', {'order':order})
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = f'filename=order_{order_id}.pdf'
+#     weasyprint.HTML(string=html).write_pdf(response, stylesheets=[weasyprint.CSS(settings.STATIC_ROOT/'css/pdf.css')])
+#     return response
 

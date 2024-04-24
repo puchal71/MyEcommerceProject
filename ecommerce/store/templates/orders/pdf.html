@@ -18,13 +18,14 @@
         pobieranie danych z customer czy tam shipping
         strona 470 ksiazki
 
-        jesl prywatna osoba:
+<!--            TODO jesli prywatna osoba:-->
 
         {{ customer.firstname }} {{ customer.lastname }}<br>
         {{ customer.address }} {{ customer.zipcode }}<br>
         {{ customer.city }} {{ customer.personnummer }}<br>
 
-         jesli firma:
+<!--            TODO jesli firma-->
+
 
         {{ customer.company_name }} {{ customer.company_idnumber }}<br>
         {{ customer.address }} {{ customer.zipcode }}<br>
@@ -51,7 +52,7 @@
             {% endfor %}
             <tr class="total">
                 <td colspan="3">Total at betala:</td>
-                <td class="num">{{ order.get_cart_total|floatformat:2 }}</td>
+                <td class="num">{{ order.get_cart_total|floatformat:2 }} SEK</td>
             </tr>
         </tbody>
     </table>
