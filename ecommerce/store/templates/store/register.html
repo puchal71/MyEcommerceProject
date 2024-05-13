@@ -1,0 +1,27 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+{% for message in messages %}
+<li>{{message}}</li>
+{% endfor %}
+<form method="POST">
+  {% csrf_token %}
+  <div class="row">
+        <div class="card">
+           {{form.as_p}}
+
+              <div>
+                <input class="btn btn-secondary" type="submit" value="Registrera sig!">
+              </div>
+              <br>
+
+              <div class="text-center">
+                <p>Har du redan ett konto?<a href="{% url 'login' %}">Logga in</a></p>
+              </div>
+            </form>
+        </div>
+    </div>
+</form>
+
+
+{% endblock content %}
