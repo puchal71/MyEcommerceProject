@@ -171,4 +171,3 @@ def logout_page(request):
 #     response['Content-Disposition'] = f'filename=order_{order_id}.pdf'
 #     weasyprint.HTML(string=html).write_pdf(response, stylesheets=[weasyprint.CSS(settings.STATIC_ROOT/'css/pdf.css')])
 #     return response
-
